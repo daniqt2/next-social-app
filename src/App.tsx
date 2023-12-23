@@ -4,8 +4,8 @@ import { Route, Routes } from "react-router-dom";
 
 import { AlbumpProvider } from "./providers/albumProvider";
 import { TodoProvider } from "./providers/todo.provider";
-import { UserDetail } from "./views/userDetail.view";
-import { UserList } from "./views/userList.view";
+import { UserDetail } from "./views/UserDetail.view";
+import { UserList } from "./views/UserList.view";
 
 function App() {
   return (
