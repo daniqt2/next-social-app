@@ -19,8 +19,13 @@ export const TodoList: React.FC<{ id: number }> = ({ id }) => {
   return (
     <div className="px-4">
       <p className="text-xl">T O D O - L I S T:</p>
-      {todos.map((todo) => {
-        return <p className={getClass(todo.completed)}> - {todo.title}</p>;
+      {todos.map((todo, idx) => {
+        return (
+          <p key={idx} className={getClass(todo.completed)}>
+            {" "}
+            - {todo.title}
+          </p>
+        );
       })}
     </div>
   );

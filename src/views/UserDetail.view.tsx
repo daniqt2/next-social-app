@@ -1,20 +1,34 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+import { AlbumContext } from "../providers/albumProvider";
+import { IAlbum } from "../interfaces/album.interface";
 import { IUser } from "../interfaces/user.insterface";
 import { TodoList } from "../components/todos/TodoList";
 import userService from "../services/user.service";
 
 export const UserDetail: React.FC<object> = () => {
   const { id } = useParams();
+
   const [user, setUser] = useState<IUser>();
+  const [albumId, setAlbumId] = useState<number>();
+  const [mainAlbum, setMainAlbum] = useState<IAlbum>();
+
   const navigate = useNavigate();
+
+  const { getAlbumById } = useContext(AlbumContext);
 
   useEffect(() => {
     const getUsers = async () => {
       try {
         if (!id) return;
-        const user = await userService.getUserDetail(id);
+        const [user, albumList] = await Promise.all([
+          userService.getUserDetail(id),
+          userService.getUserAlbums(id),
+        ]);
+
+        setAlbumId(albumList[0].id);
+
         setUser(user);
       } catch (e) {
         console.error(e);
@@ -24,7 +38,15 @@ export const UserDetail: React.FC<object> = () => {
     getUsers();
   }, [id]);
 
+  useEffect(() => {
+    if (!albumId) return;
+    const albumData = getAlbumById(albumId);
+    setMainAlbum(albumData);
+  }, [albumId]);
+
   const goBack = () => navigate(`/`);
+
+  // todo - divide in components
 
   if (!user) return null; // should be loader
   return (
@@ -52,6 +74,11 @@ export const UserDetail: React.FC<object> = () => {
               <span className=" text-gray-400">company:</span>{" "}
               {user.company.name}
             </p>
+
+            <div className="mt-5 text-center">
+              <p>main album cover</p>
+              <img className="mx-auto" src={mainAlbum?.thumbnailUrl} />
+            </div>
           </div>
         </div>
         <div className="flex-grow-1 px-10">

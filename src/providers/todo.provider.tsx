@@ -19,9 +19,8 @@ export const TodoProvider: React.FC<PropsWithChildren<object>> = ({
 
   const getTodoList = async () => {
     try {
-      console.log("im here");
-      const todos = await todoService.getTodoList();
-      setTodos(todos);
+      const _todos = await todoService.getTodoList();
+      setTodos(_todos);
     } catch (error) {
       console.error();
     }

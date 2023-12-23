@@ -5,3 +5,9 @@ export interface IAlbum {
   url: string;
   thumbnailUrl: string;
 }
+
+export interface IUserAlbum {
+  userId: number;
+  id: number;
+  title: string;
+}

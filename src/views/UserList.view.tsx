@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { IUser } from "../interfaces/user.insterface";
-import { UserCard } from "../components/userCard";
+import { UserCard } from "../components/UserCard";
 import { useNavigate } from "react-router-dom";
 import userService from "../services/user.service";
 
@@ -14,7 +14,6 @@ export const UserList: React.FC<object> = () => {
     const getUsers = async () => {
       try {
         const users = await userService.getUserList();
-        console.log(users);
         setUsers(users);
       } catch (e) {
         console.error(e);
